@@ -13,6 +13,8 @@ pub fn lcmi64(a: i64, b: i64) -> i64 {
     return (a * b) / gcdi64(a, b);
 }
 
+// PartialEq: This assumes that both fractions are fully simplified
+#[derive(PartialEq)]
 pub struct Frac {
     pub num: i64,
     pub denom: i64
@@ -51,6 +53,10 @@ impl Frac {
 
     pub fn is_int(&self) -> bool {
         self.denom == 1
+    }
+
+    pub fn is_negative(&self) -> bool {
+        self.denom * self.num < 0
     }
     
     pub fn inv(&self) -> Self {

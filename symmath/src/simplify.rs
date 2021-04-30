@@ -102,9 +102,12 @@ impl Expr {
 
                 if !frac.is_zero() {
                     new_elements.push(Expr::new_empty(Operator::Frac(frac)));
+                } else if new_elements.len() == 0 {
+                    new_elements.push(Expr::int(0));
                 }
 
                 self.elements = Some(new_elements);
+                
                 return changed;
             },
             Operator::Mul => {
@@ -218,11 +221,16 @@ impl Expr {
                 return changed;
             },
             Operator::Name(_) => { false },
-            Operator::Func(_) => {
+            Operator::Func(ref mut f) => {
                 let mut changed = false;
                 for ref mut child in self.elements.as_mut().expect("Func has no children").iter_mut() {
                     if child.simplify_impl(opts) { changed = true; }
                 }
+                
+                let val = f.simplify_value(self.elements.take().unwrap());
+                self.operator = val.operator;
+                self.elements = val.elements;
+
                 return changed;
             },
             Operator::Const(_) => { false }

@@ -4,7 +4,8 @@ use symmath::simplify::*;
 fn main() {
     // let mut expr = Expr::pi() + Expr::frac(1, 2) + Expr::frac(4, 5) + Expr::frac(3, 2) * (Expr::frac(4, 2) * Expr::int(10)) + Expr::var("x")*Expr::int(0);
     // let mut expr = (Expr::var("x") + Expr::frac(1, 2)) / Expr::frac(2, 1);
-    let mut expr = Expr::frac(2, 1) - Expr::frac(3, 4);
+    let mut expr = Expr::pi() * (Expr::int(1) / Expr::int(6));
+    // let mut expr = Expr::func(FuncIdentifier::Sine, vec![Expr::int(1) - Expr::int(1)]) + Expr::int(1);
     println!("Before simplify: {}", expr.to_ascii());
     expr.simplify(&SimplifcationOpts::expand());
     expr.simplify(&SimplifcationOpts::integers());
