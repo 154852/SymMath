@@ -25,6 +25,7 @@ pub enum Constant {
     Pi,
     E
 }
+
 impl Constant {
     pub fn get_name(&self) -> String {
         match self {

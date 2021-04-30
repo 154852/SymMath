@@ -302,6 +302,19 @@ impl Expr {
                 for ref mut child in self.elements.as_mut().expect("Sub has no children").iter_mut() {
                     if child.flatten_impl(opts) { changed = true; }
                 }
+                self.operator = Operator::Add;
+
+                let mut new_elements = Vec::new();
+
+                for (idx, child) in self.elements.take().unwrap().into_iter().enumerate() {
+                    if idx == 0 {
+                        new_elements.push(child);
+                    } else {
+                        new_elements.push(child * Expr::int(-1));
+                    }
+                }
+
+                self.elements = Some(new_elements);
                 return changed;
             },
             Operator::Pow => {
